@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PPT to PDF Converter</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <input type="file" id="pptFile" accept=".ppt,.pptx">
+    <button id="convertBtn">Convert to PDF</button>
+
+    <script>
+        $(document).ready(function() {
+            $("#convertBtn").click(function() {
+                var pptFile = $("#pptFile")[0].files[0];
+                var formData = new FormData();
+                formData.append("pptFile", pptFile);
+
+                $.ajax({
+                    url: "/convert",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        // Handle the response, e.g., display a success message or download the PDF
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle the error
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
